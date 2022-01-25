@@ -6,7 +6,27 @@ import reportWebVitals from './reportWebVitals';
 import 'tachyons';
 
 
-ReactDOM.render(<App/>, document.getElementById('root'));
+//REDUX STUFF
+import {Provider, connect} from 'react-redux';
+import {createLogger} from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
+import {searchRobots, requestRobots} from './reducers';
+
+const logger = createLogger();
+
+const rootReducer = combineReducers({searchRobots, requestRobots});
+const store = createStore(rootReducer, applyMiddleware(thunkMiddleware,logger));
+
+
+
+
+ReactDOM.render(
+	<Provider store ={store}>
+		<App/>
+	</Provider>, document.getElementById('root'));
+
+
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
